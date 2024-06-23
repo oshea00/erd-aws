@@ -1,0 +1,33 @@
+digraph ERD {
+    // Define nodes
+    Cluster [shape=box, label="Cluster"];
+    EC2Instance [shape=box, label="EC2 Instance"];
+    Task [shape=box, label="Task"];
+    ECSService [shape=box, label="ECS Service"];
+    Container [shape=box, label="Container"];
+    Region [shape=box, label="Region"];
+    AZ [shape=box, label="AZ"];
+    Subnet [shape=box, label="Subnet"];
+    Placement [shape=box, label="Placement Strategy"];
+    Autoscale [shape=box, label="Autoscaling Group"];
+    LaunchConfig [shape=box, label="Launch Config"];
+    ECSProfile [shape=box, label="Instance Profile"];
+    ECSRole [shape=box, label="ECS Role"];
+    Policy [shape=box, label="Policy"];
+
+    // Define edges
+    Region -> AZ [label="has"];
+    AZ -> Subnet [label="has"];
+    Subnet -> EC2Instance [label="assigned"];
+    Cluster -> ECSService [label="hosts"];
+    ECSService -> Placement[label="has"];
+    Placement -> Subnet[label="placed"];
+    ECSService -> Task [dir=none, label="has a"];
+    Autoscale -> LaunchConfig [dir=none, label="has a"];
+    ECSProfile -> ECSRole [dir=none, label="has a"];
+    ECSProfile -> LaunchConfig [dir=none, label="has a"];
+    Task -> Container [label="has"];
+    ECSRole -> Policy [label="has"];
+    LaunchConfig -> Cluster [label="targets"];
+}
+
